@@ -1,1 +1,2 @@
 @AGENTS.md
+@REACT_NEXTJS_GUIDE.md

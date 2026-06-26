@@ -1,8 +1,7 @@
 import { getSubscriberCount } from "@/lib/subscribers";
 
-// Server Component — runs on the server, no "use client"
-export function SubscriberCount() {
-  const count = getSubscriberCount();
+export async function SubscriberCount() {
+  const count = await getSubscriberCount();
   return (
     <p className="text-sm text-slate-400">
       {count === 0

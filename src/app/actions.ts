@@ -1,6 +1,6 @@
 "use server";
 
-import { addSubscriber } from "@/lib/subscribers";
+import { createSubscriber } from "@/lib/subscribers";
 
 export type SubscribeState = {
   status: "idle" | "success" | "error" | "duplicate";
@@ -17,7 +17,7 @@ export async function subscribeAction(
     return { status: "error", message: "Adresse email invalide." };
   }
 
-  const result = addSubscriber(email.trim().toLowerCase());
+  const result = await createSubscriber(email.trim().toLowerCase());
 
   if (result.alreadyExists) {
     return { status: "duplicate", message: "Vous êtes déjà inscrit !" };

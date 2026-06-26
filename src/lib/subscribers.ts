@@ -1,16 +1,23 @@
-// In-memory store — resets on server restart (demo purposes)
-const store = {
-  emails: new Set<string>(),
+import { PrismaClientKnownRequestError } from "@/generated/prisma/internal/prismaNamespace";
+import { prisma } from "./db";
+
+export type SubscriberResult = {
+  success: boolean;
+  alreadyExists: boolean;
 };
 
-export function addSubscriber(email: string): { success: boolean; alreadyExists: boolean } {
-  if (store.emails.has(email)) {
-    return { success: false, alreadyExists: true };
+export async function createSubscriber(email: string): Promise<SubscriberResult> {
+  try {
+    await prisma.subscriber.create({ data: { email } });
+    return { success: true, alreadyExists: false };
+  } catch (err) {
+    if (err instanceof PrismaClientKnownRequestError && err.code === "P2002") {
+      return { success: false, alreadyExists: true };
+    }
+    throw err;
   }
-  store.emails.add(email);
-  return { success: true, alreadyExists: false };
 }
 
-export function getSubscriberCount(): number {
-  return store.emails.size;
+export async function getSubscriberCount(): Promise<number> {
+  return prisma.subscriber.count();
 }

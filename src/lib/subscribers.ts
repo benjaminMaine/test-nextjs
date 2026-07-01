@@ -21,3 +21,13 @@ export async function createSubscriber(email: string): Promise<SubscriberResult>
 export async function getSubscriberCount(): Promise<number> {
   return prisma.subscriber.count();
 }
+
+export type Subscriber = {
+  id: string;
+  email: string;
+  createdAt: Date;
+};
+
+export async function getSubscribers(): Promise<Subscriber[]> {
+  return prisma.subscriber.findMany({ orderBy: { createdAt: "desc" } });
+}

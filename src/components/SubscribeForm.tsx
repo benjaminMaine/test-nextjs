@@ -29,7 +29,7 @@ export function SubscribeForm() {
       {state.message && (
         <p
           role="status"
-          className={`absolute mt-14 text-sm ${
+          className={`mt-2 text-sm ${
             state.status === "success"
               ? "text-emerald-600"
               : state.status === "duplicate"

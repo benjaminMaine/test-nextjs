@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { SubscribeForm } from "./SubscribeForm";
 import { SubscriberCount } from "./SubscriberCount";
 
@@ -15,7 +16,9 @@ export function SubscribeSection() {
         </p>
         <div className="relative flex flex-col items-center gap-4">
           <SubscribeForm />
-          <SubscriberCount />
+          <Suspense fallback={<p className="text-sm text-slate-400">Chargement...</p>}>
+            <SubscriberCount />
+          </Suspense>
         </div>
       </div>
     </section>

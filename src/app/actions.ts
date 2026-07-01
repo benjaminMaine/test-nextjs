@@ -13,7 +13,8 @@ export async function subscribeAction(
 ): Promise<SubscribeState> {
   const email = formData.get("email");
 
-  if (!email || typeof email !== "string" || !email.includes("@")) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email || typeof email !== "string" || !emailRegex.test(email.trim())) {
     return { status: "error", message: "Adresse email invalide." };
   }
 
